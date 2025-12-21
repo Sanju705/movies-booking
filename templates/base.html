@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>cinetime</title>
+</head>
+<style>
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  background: #050816;
+  color: #f5f5f5;
+}
+
+/* Layout */
+header,
+footer {
+  background: #050816;
+}
+
+main {
+  padding: 2rem 7%;
+}
+
+/* Navbar */
+.navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 7%;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: rgba(5, 8, 22, 0.96);
+  backdrop-filter: blur(10px);
+}
+
+.logo {
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  font-size: 1.25rem;
+  color: #ffb23f;
+}
+
+.nav-links {
+  list-style: none;
+  display: flex;
+  gap: 1.5rem;
+  margin: 0;
+  padding: 0;
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: #e1e1e1;
+  font-size: 0.95rem;
+  padding-bottom: 0.25rem;
+  border-bottom: 2px solid transparent;
+  transition: color 0.2s ease, border-color 0.2s ease;
+}
+
+.nav-links a:hover {
+  color: #ffb23f;
+}
+
+.nav-links a.active {
+  color: #ffb23f;
+  border-color: #ffb23f;
+}
+
+/* Hero / Get Ticket section */
+.hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr);
+  gap: 2rem;
+  margin-top: 2rem;
+  padding: 2.5rem 2.5rem 2rem;
+  border-radius: 1.25rem;
+  background: radial-gradient(circle at top left, #1a2a6c, #050816 55%);
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.35);
+}
+
+.hero-content h1 {
+  margin-top: 0;
+  font-size: clamp(2rem, 3vw, 2.6rem);
+}
+
+.hero-content p {
+  margin-bottom: 1.5rem;
+  color: #d5d5d5;
+}
+
+/* Forms */
+.ticket-form,
+.search-form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem 1.5rem;
+}
+
+.ticket-form .form-group {
+  display: flex;
+  flex-direction: column;
+  min-width: min(180px, 100%);
+  flex: 1 1 180px;
+}
+
+label {
+  font-size: 0.8rem;
+  margin-bottom: 0.35rem;
+  color: #d1d5db;
+}
+
+input,
+select {
+  padding: 0.55rem 0.7rem;
+  border-radius: 0.5rem;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  background: rgba(5, 8, 22, 0.82);
+  color: #f5f5f5;
+  font-size: 0.9rem;
+}
+
+input:focus,
+select:focus {
+  outline: 2px solid #ffb23f;
+  outline-offset: 1px;
+}
+
+/* Buttons */
+.btn-primary,
+.btn-secondary,
+.btn-outline {
+  border-radius: 999px;
+  padding: 0.6rem 1.4rem;
+  font-size: 0.9rem;
+  border: none;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, #ffb23f, #ff6a3f);
+  color: #050816;
+  margin-top: 0.2rem;
+}
+
+.btn-secondary {
+  background: transparent;
+  border: 1px solid #ffb23f;
+  color: #ffb23f;
+}
+
+.btn-outline {
+  display: inline-block;
+  text-decoration: none;
+  text-align: center;
+  margin-top: 0.5rem;
+  border: 1px solid #ffb23f;
+  background: transparent;
+  color: #ffb23f;
+}
+
+/* Upcoming section on home */
+.section-header {
+  margin-top: 3rem;
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.section-header h2 {
+  margin: 0;
+  font-size: 1.4rem;
+}
+
+.link-more {
+  font-size: 0.9rem;
+  color: #ffb23f;
+  text-decoration: none;
+}
+
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.cards-grid.wide {
+  margin-top: 1.5rem;
+}
+
+.card {
+  background: linear-gradient(145deg, #0b1025, #050816);
+  border-radius: 1rem;
+  padding: 1.1rem 1.2rem;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3);
+}
+
+.card h2,
+.card h3 {
+  margin-top: 0;
+  margin-bottom: 0.4rem;
+}
+
+.card p {
+  margin: 0.25rem 0;
+}
+
+.card .meta {
+  font-size: 0.8rem;
+  color: #9ca3af;
+}
+
+/* Search section */
+.search-section {
+  margin-top: 3rem;
+  padding: 1.8rem 2rem;
+  border-radius: 1.25rem;
+  background: radial-gradient(circle at top right, #1a2a6c, #050816 55%);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.38);
+}
+
+.search-section h2 {
+  margin-top: 0;
+}
+
+.search-form {
+  margin-top: 1rem;
+}
+
+.search-form input[type="search"] {
+  flex: 1 1 220px;
+}
+
+.search-tags {
+  margin-top: 1rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  font-size: 0.85rem;
+  align-items: center;
+}
+
+.search-tags span {
+  color: #d1d5db;
+}
+
+.search-tags button {
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  background: transparent;
+  color: #f5f5f5;
+  padding: 0.3rem 0.8rem;
+  font-size: 0.8rem;
+  cursor: pointer;
+}
+
+/* Page heading (for inner pages) */
+.page-heading {
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+}
+
+.page-heading h1 {
+  margin: 0 0 0.4rem;
+}
+
+/* Footer */
+footer {
+  margin-top: 3rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.footer-inner {
+  padding: 1.2rem 7%;
+  font-size: 0.85rem;
+  color: #9ca3af;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .navbar {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.75rem;
+  }
+
+  main {
+    padding-inline: 1.25rem;
+  }
+
+  .hero {
+    padding-inline: 1.5rem;
+  }
+
+  .search-section {
+    padding-inline: 1.5rem;
+  }
+}
+
+
+
+
+/* Ticket layout */
+.ticket-layout {
+  margin-top: 2rem;
+  display: flex;
+  justify-content: center;
+}
+
+.ticket-card {
+  max-width: 640px;
+  width: 100%;
+  background: #0b1025;
+  border-radius: 1.5rem;
+  border: 1px dashed rgba(255, 255, 255, 0.3);
+  padding: 1.5rem 1.75rem;
+  box-shadow: 0 18px 40px rgba(0, 0, 0, 0.45);
+  position: relative;
+}
+
+.ticket-header h2 {
+  margin: 0;
+}
+
+.ticket-header .meta {
+  margin-top: 0.25rem;
+  font-size: 0.85rem;
+  color: #9ca3af;
+}
+
+.ticket-body {
+  margin-top: 1.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+}
+
+.ticket-details p {
+  margin: 0.15rem 0;
+  font-size: 0.95rem;
+}
+
+.ticket-details span {
+  color: #9ca3af;
+  display: inline-block;
+  min-width: 70px;
+}
+
+/* Static QR code box (only HTML + CSS) */
+.qr-wrapper {
+  text-align: center;
+}
+
+.qr-box {
+  width: 120px;
+  height: 120px;
+  background: #f5f5f5;
+  border-radius: 0.5rem;
+  padding: 10px;
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  grid-template-rows: repeat(6, 1fr);
+  gap: 2px;
+}
+
+/* Dark squares to mimic QR pattern */
+.qr-block {
+  background: #111827;
+}
+
+.qr-block.b1 { grid-area: 1 / 1 / 3 / 3; }
+.qr-block.b2 { grid-area: 1 / 5 / 3 / 7; }
+.qr-block.b3 { grid-area: 5 / 1 / 7 / 3; }
+.qr-block.b4 { grid-area: 3 / 3 / 4 / 4; }
+.qr-block.b5 { grid-area: 3 / 4 / 5 / 5; }
+.qr-block.b6 { grid-area: 4 / 2 / 5 / 3; }
+.qr-block.b7 { grid-area: 5 / 4 / 6 / 5; }
+.qr-block.b8 { grid-area: 2 / 4 / 3 / 5; }
+
+.qr-wrapper figcaption {
+  margin-top: 0.4rem;
+  font-size: 0.75rem;
+  color: #9ca3af;
+}
+
+.ticket-footer {
+  margin-top: 1.2rem;
+  font-size: 0.8rem;
+  color: #9ca3af;
+  border-top: 1px dashed rgba(255, 255, 255, 0.2);
+  padding-top: 0.7rem;
+}
+
+/* Ticket responsive */
+@media (max-width: 640px) {
+  .ticket-card {
+    padding-inline: 1.2rem;
+  }
+
+  .ticket-body {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+</style>
+
+<body>
+  <header>
+    <nav class="navbar">
+      <div class="logo">CineTime</div>
+      <ul class="nav-links">
+        <li><a href="{% url 'index' %}" class="active">Home</a></li>
+        <li><a href="{% url 'upcoming' %}" class="action">Upcoming Movies</a></li>
+        <li><a href="{% url 'events' %}">Events & Programs</a></li>
+      </ul>
+    </nav>
+  </header>
+  {% block content %}
+
+  {% endblock content %}
+
+  <footer>
+    <div class="footer-inner">
+      <p>&copy; 2026 CineTime. All rights reserved.</p>
+
+    </div>
+  </footer>
+</body>
+</html>

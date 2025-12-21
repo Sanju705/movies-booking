@@ -1,0 +1,97 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<main>
+    <!-- Hero / Get Ticket -->
+    <section class="hero" aria-labelledby="get-ticket-heading">
+      <div class="hero-content">
+        <h1 id="get-ticket-heading">Book Your Movie Tickets</h1>
+        <p>Choose your favourite movie, time and seats in a few simple steps.</p>
+        <form class="ticket-form" action="" method="post" >
+            {% csrf_token %}
+            {{ form.as_p }}
+          <div class="form-group">
+            <label for="movie">Movie</label>
+            <select id="movie" name="movie">
+              <option>Avengers: Endgame</option>
+              <option>Spider‑Man: Homecoming</option>
+              <option>Inception</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="date">Date</label>
+            <input type="date" id="date" name="date" />
+          </div>
+
+          <div class="form-group">
+            <label for="time">Show Time</label>
+            <select id="time" name="time">
+              <option>10:00 AM</option>
+              <option>01:30 PM</option>
+              <option>06:00 PM</option>
+              <option>09:30 PM</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="tickets">Tickets</label>
+            <input type="number" id="tickets" name="tickets" min="1" value="1" />
+          </div>
+
+          <button type="submit" class="btn-primary"><a href="{% url 'gettickets' %}"></a>get Ticket</button>
+        </form>
+        {{form}}
+      </div>
+    </section>
+
+    <!-- Upcoming & Programs -->
+    <section class="upcoming" aria-labelledby="upcoming-heading">
+      <header class="section-header">
+        <h2 id="upcoming-heading">Upcoming Movies & Programs</h2>
+        <a href="{% url 'upcoming' %}" class="link-more">View all movies →</a>
+      </header>
+
+      <div class="cards-grid">
+        <article class="card">
+          <h3>Batman Returns</h3>
+          <p>Dark knight returns to save Gotham from chaos.</p>
+          <p class="meta">Release: 25 Jan 2026</p>
+        </article>
+
+        <article class="card">
+          <h3>Frozen World</h3>
+          <p>An epic animated journey through a magical frozen land.</p>
+          <p class="meta">Release: 5 Feb 2026</p>
+        </article>
+
+        <article class="card">
+          <h3>Comedy Night Live</h3>
+          <p>Stand‑up comedy program with top performers.</p>
+          <p class="meta">Program: Every Friday, 8 PM</p>
+        </article>
+      </div>
+
+      <div class="section-footer-link">
+        <a href="{% url 'events' %}" class="link-more">View all events & programs →</a>
+      </div>
+    </section>
+
+    <!-- Search Column -->
+    <section class="search-section" aria-labelledby="search-heading">
+      <h2 id="search-heading">Search Movies & Events</h2>
+      <form class="search-form" role="search">
+        <input type="search" placeholder="Search by movie, event or language" />
+        <button type="submit" class="btn-secondary">Search</button>
+      </form>
+
+      <div class="search-tags">
+        <span>Popular:</span>
+        <button type="button">Action</button>
+        <button type="button">Comedy</button>
+        <button type="button">Drama</button>
+        <button type="button">Kids</button>
+      </div>
+    </section>
+  </main>
+{% endblock content %}
