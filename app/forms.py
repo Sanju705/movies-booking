@@ -1,7 +1,10 @@
 from django import forms
-from .models import ticket
 
-class ticketbooking(forms.ModelForm):
-    class Meta:
-        model = ticket
-        fields = '__all__'
+class ticketbooking(forms.Form):
+    # class Meta:
+    #     model = ticket
+    #     fields = '__all__'
+    movie_name = forms.CharField()
+    date = forms.DateField()
+    showtime = forms.TimeField()
+    ticket = forms.IntegerField()

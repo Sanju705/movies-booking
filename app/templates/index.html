@@ -10,7 +10,7 @@
         <form class="ticket-form" action="" method="post" >
             {% csrf_token %}
             {{ form.as_p }}
-          <div class="form-group">
+          <!-- <div class="form-group">
             <label for="movie">Movie</label>
             <select id="movie" name="movie">
               <option>Avengers: Endgame</option>
@@ -37,11 +37,11 @@
           <div class="form-group">
             <label for="tickets">Tickets</label>
             <input type="number" id="tickets" name="tickets" min="1" value="1" />
-          </div>
+          </div> -->
 
-          <button type="submit" class="btn-primary"><a href="{% url 'gettickets' %}"></a>get Ticket</button>
+          <button type="submit" class="btn-primary">get Ticket</button>
         </form>
-        {{form}}
+        <!-- {{form}} -->
       </div>
     </section>
 

@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="ticket-box">
+    <h2 style="text-align:center;">🎟 Your Ticket</h2>
+
+    <p><strong>Movie:</strong> {{ Ticket.movie_name }}</p>
+    <p><strong>Date:</strong> {{ Ticket.date }}</p>
+    <p><strong>Showtime:</strong> {{ Ticket.showtime }}</p>
+    <p><strong>Seat:</strong> {{ Ticket.ticket }}</p>
+
+    <hr>
+
+    <h4 style="text-align:center;">Scan for Verification</h4>
+    <img src="data:image/png;base64,{{ qr_code }}" alt="QR Code">
+
+    <div style="text-align:center;">
+        <button onclick="window.print()">Print Ticket</button>
+    </div>
+</div>
+{% endblock content %}
