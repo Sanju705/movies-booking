@@ -7,6 +7,7 @@ This project is a Movie Ticket Booking Management System built with Django. User
 Perfect for learning Django ORM, Forms, Admin customization, and database management.
 
 🚀 Features Implemented
+
 ✅ User Features:
 
 Book movie tickets with movie name, date, and showtime
@@ -91,20 +92,6 @@ python manage.py runserver
 Step 7: Access Your App
 🌐 Frontend: http://127.0.0.1:8000/
 🛠️  Admin:   http://127.0.0.1:8000/admin/
-
-🎯 Project Structure
-
-moviesbooking/
-├── app/
-│   ├── models.py      # Ticket model
-│   ├── forms.py       # Booking form
-│   └── admin.py       # Admin configuration
-├── moviesbooking/
-│   ├── settings.py
-│   ├── urls.py
-│   └── wsgi.py
-├── manage.py
-└── README.md
 
 ⚙️ Useful Commands
 | Command                          | Purpose                  |
