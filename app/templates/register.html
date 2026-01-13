@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Register | Cinemovie</title>
+<style>
+body{
+    /* background:#121212; */
+    background: radial-gradient(circle at top right, #1a2a6c, #050816 55%);
+    color:white;
+    font-family:Arial;
+}
+.form-box{
+    width:400px;
+    margin:80px auto;
+    background:#1f1f1f;
+    padding:30px;
+    border-radius:10px;
+}
+input{
+    width:100%;
+    padding:10px;
+    margin:10px 0;
+    background:#333;
+    color:white;
+    border:none;
+    border-radius:5px;
+}
+button{
+    width:100%;
+    padding:10px;
+    background:#7d86a0;
+    color:white;
+    border:none;
+    font-size:16px;
+}
+a{ color:#e50914; }
+</style>
+</head>
+<body>
+<div class="form-box">
+<h2>Create Account</h2>
+<form method="POST">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Register</button>
+</form>
+<p>Already have an account? <a href="{% url 'login' %}">Login</a></p>
+</div>
+</body>
+</html>

@@ -147,3 +147,8 @@ EMAIL_HOST_USER = "kamanisanju2705@gmail.com"
 EMAIL_HOST_PASSWORD = "uqem layc urhf rtgh"   # App password (not your Gmail password)
 
 # uqem layc urhf rtgh   google app password
+
+AUTH_USER_MODEL = 'app.CinemaUser'
+
+LOGIN_REDIRECT_URL = 'home'
+LOGOUT_REDIRECT_URL = 'login'

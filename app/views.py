@@ -7,7 +7,12 @@ from random import randint
 import qrcode
 from io import BytesIO
 import base64
+from django.contrib.auth import authenticate, login as auth_login
+from django.contrib.auth.decorators import login_required
+from .forms import RegisterForm
 
+
+@login_required
 def index(request):
     form = ticketbooking()
     if request.method == 'POST':
@@ -64,3 +69,27 @@ def booked_ticket(request,id):
         "qr_code": qr_base64
     }
     return render(request, "booked_ticket.html", context)
+
+
+def register(request):
+    if request.method == 'POST':
+        form = RegisterForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('login')
+    else:
+        form = RegisterForm()
+    return render(request, 'register.html', {'form': form})
+
+def login(request):
+    if request.method == 'POST':
+        username = request.POST['username']
+        password = request.POST['password']
+        user = authenticate(request, username=username, password=password)
+        if user:
+            auth_login(request, user)
+            return redirect('index')
+        else:
+            return render(request, 'login.html', {'error': 'Invalid Credentials'})
+    return render(request, 'login.html')
+
