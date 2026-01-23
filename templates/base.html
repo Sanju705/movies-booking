@@ -416,6 +416,12 @@ footer {
     align-items: flex-start;
   }
 }
+#ai{
+  border-radius: 5%;
+  width: 60px;
+  background-color: #ffffff;
+  font-style: italic;
+}
 </style>
 
 <body>
@@ -423,9 +429,12 @@ footer {
     <nav class="navbar">
       <div class="logo">CineTime</div>
       <ul class="nav-links">
-        <li><a href="{% url 'index' %}" class="active">Home</a></li>
-        <li><a href="{% url 'upcoming' %}" class="action">Upcoming Movies</a></li>
+        
+        <li><a href="{% url 'index' %}">Home</a></li>
+        <li><a href="{% url 'upcoming' %}">Upcoming Movies</a></li>
         <li><a href="{% url 'events' %}">Events & Programs</a></li>
+        <li><a href="{% url 'chatbot' %}">Cine AI</a></li>
+        <li><a href="{% url 'login' %}">logout</a></li>
       </ul>
     </nav>
   </header>

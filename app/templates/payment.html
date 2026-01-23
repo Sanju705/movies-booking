@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Payment | Cinemovie</title>
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<style>
+body{
+    background:#050816;
+    color:white;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    height:100vh;
+    font-family:Arial;
+}
+.card{
+    background:#1f1f1f;
+    padding:40px;
+    border-radius:15px;
+    text-align:center;
+    width:350px;
+}
+button{
+    padding:12px 25px;
+    background:#42647a;
+    border:none;
+    color:white;
+    font-size:16px;
+    border-radius:8px;
+    cursor:pointer;
+}
+</style>
+</head>
+
+<body>
+
+<div class="card">
+    <h2>🎟 Ticket Payment</h2>
+    <p>Amount: ₹{{ amount }}</p>
+    <button id="pay-btn">Pay Now</button>
+</div>
+
+<script>
+var options = {
+    "key": "{{ razorpay_key }}",
+    "amount": "{{ amount }}00",
+    "currency": "INR",
+    "name": "Cinemovie",
+    "description": "Movie Ticket Booking",
+    "order_id": "{{ order_id }}",
+    "callback_url": "{% url 'payment_success' %}",
+    "theme": {
+        "color": "#42647a"
+    }
+};
+var rzp = new Razorpay(options);
+document.getElementById('pay-btn').onclick = function(e){
+    rzp.open();
+    e.preventDefault();
+}
+</script>
+
+</body>
+</html>

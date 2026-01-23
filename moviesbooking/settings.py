@@ -148,7 +148,17 @@ EMAIL_HOST_PASSWORD = "uqem layc urhf rtgh"   # App password (not your Gmail pas
 
 # uqem layc urhf rtgh   google app password
 
+
 AUTH_USER_MODEL = 'app.CinemaUser'
 
 LOGIN_REDIRECT_URL = 'home'
 LOGOUT_REDIRECT_URL = 'login'
+
+# payment method 
+RAZORPAY_KEY_ID = "rzp_test_xxxxxxxx"
+RAZORPAY_KEY_SECRET = "xxxxxxxxxxxxxxxx"
+
+# Google Gemini AI API Key
+# Get your API key from: https://makersuite.google.com/app/apikey
+GEMINI_API_KEY = "AIzaSyBz0BsiZjt3mZtObIxgy5TCIuCzVTwL238"
+
