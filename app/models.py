@@ -4,10 +4,11 @@ from django.conf import settings
 
 class ticket(models.Model):
     movie_name = models.CharField(max_length=100)
+    
     date = models.DateField()
     showtime = models.TimeField()
     ticket = models.PositiveIntegerField()
-    email = models.EmailField()
+    email = models.EmailField(default="kamanisanju2705@gmail.com")
     price = models.IntegerField(default=250)
 
 class CinemaUser(AbstractUser):

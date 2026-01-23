@@ -1,50 +1,286 @@
-<!DOCTYPE html>
-<html>
-<head>
-<title>Register | Cinemovie</title>
+{% extends 'base.html' %}
+
+{% block content %}
 <style>
-body{
-    /* background:#121212; */
-    background: radial-gradient(circle at top right, #1a2a6c, #050816 55%);
-    color:white;
-    font-family:Arial;
-}
-.form-box{
-    width:400px;
-    margin:80px auto;
-    background:#1f1f1f;
-    padding:30px;
-    border-radius:10px;
-}
-input{
-    width:100%;
-    padding:10px;
-    margin:10px 0;
-    background:#333;
-    color:white;
-    border:none;
-    border-radius:5px;
-}
-button{
-    width:100%;
-    padding:10px;
-    background:#7d86a0;
-    color:white;
-    border:none;
-    font-size:16px;
-}
-a{ color:#e50914; }
+    .register-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 90vh;
+        padding: 2rem 1rem;
+    }
+
+    .register-card {
+        background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+        border: 2px solid rgba(255, 178, 63, 0.3);
+        border-radius: 15px;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
+        padding: 2.5rem;
+        width: 100%;
+        max-width: 450px;
+    }
+
+    .register-card h2 {
+        text-align: center;
+        color: #ffb23f;
+        margin-bottom: 2rem;
+        font-size: 1.8rem;
+    }
+
+    .form-group {
+        margin-bottom: 1.5rem;
+    }
+
+    .form-group label {
+        display: block;
+        margin-bottom: 0.5rem;
+        color: rgba(255, 255, 255, 0.8);
+        font-size: 0.95rem;
+        font-weight: 500;
+    }
+
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+        width: 100%;
+        padding: 0.75rem;
+        border: 1px solid rgba(255, 178, 63, 0.2);
+        border-radius: 8px;
+        background: rgba(255, 255, 255, 0.05);
+        color: white;
+        font-size: 1rem;
+        transition: all 0.3s ease;
+        box-sizing: border-box;
+    }
+
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+        outline: none;
+        border-color: #ffb23f;
+        background: rgba(255, 178, 63, 0.1);
+        box-shadow: 0 0 10px rgba(255, 178, 63, 0.2);
+    }
+
+    .form-group input::placeholder {
+        color: rgba(255, 255, 255, 0.4);
+    }
+
+    .error-message {
+        color: #ff6b6b;
+        font-size: 0.85rem;
+        margin-top: 0.25rem;
+    }
+
+    .form-group ul {
+        list-style: none;
+        padding: 0;
+        margin: 0.5rem 0 0 0;
+    }
+
+    .form-group li {
+        color: #ff6b6b;
+        font-size: 0.85rem;
+        margin: 0.25rem 0;
+    }
+
+    .form-group small {
+        display: block;
+        color: rgba(255, 255, 255, 0.5);
+        margin-top: 0.25rem;
+        font-size: 0.8rem;
+    }
+
+    .submit-btn {
+        width: 100%;
+        padding: 0.75rem;
+        background: linear-gradient(135deg, #ffb23f, #ff9500);
+        color: #050816;
+        border: none;
+        border-radius: 8px;
+        font-size: 1rem;
+        font-weight: 600;
+        cursor: pointer;
+        margin-top: 1.5rem;
+        transition: all 0.3s ease;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+    }
+
+    .submit-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 25px rgba(255, 178, 63, 0.3);
+    }
+
+    .submit-btn:active {
+        transform: translateY(0);
+    }
+
+    .login-link {
+        text-align: center;
+        margin-top: 1.5rem;
+        color: rgba(255, 255, 255, 0.6);
+    }
+
+    .login-link a {
+        color: #ffb23f;
+        text-decoration: none;
+        font-weight: 600;
+        transition: color 0.3s ease;
+    }
+
+    .login-link a:hover {
+        color: #ff9500;
+    }
+
+    .success-message {
+        background: rgba(76, 175, 80, 0.2);
+        border: 1px solid rgba(76, 175, 80, 0.3);
+        color: #4cb050;
+        padding: 1rem;
+        border-radius: 8px;
+        margin-bottom: 1.5rem;
+        text-align: center;
+    }
+
+    .error-alert {
+        background: rgba(255, 107, 107, 0.2);
+        border: 1px solid rgba(255, 107, 107, 0.3);
+        color: #ff6b6b;
+        padding: 1rem;
+        border-radius: 8px;
+        margin-bottom: 1.5rem;
+        text-align: center;
+    }
+
+    .help-text {
+        font-size: 0.75rem;
+        color: rgba(255, 255, 255, 0.4);
+        margin-top: 0.5rem;
+        line-height: 1.4;
+    }
+
+    @media (max-width: 600px) {
+        .register-card {
+            padding: 1.5rem;
+        }
+
+        .register-card h2 {
+            font-size: 1.5rem;
+        }
+    }
 </style>
-</head>
-<body>
-<div class="form-box">
-<h2>Create Account</h2>
-<form method="POST">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Register</button>
-</form>
-<p>Already have an account? <a href="{% url 'login' %}">Login</a></p>
+
+<div class="register-container">
+    <div class="register-card">
+        <h2>🎬 Create Account</h2>
+
+        {% if error %}
+        <div class="error-alert">{{ error }}</div>
+        {% endif %}
+
+        <form method="POST" novalidate>
+            {% csrf_token %}
+
+            <!-- Username Field -->
+            <div class="form-group">
+                <label for="id_username">Username</label>
+                {{ form.username }}
+                {% if form.username.errors %}
+                    <div class="error-message">
+                        {% for error in form.username.errors %}
+                            <div>⚠️ {{ error }}</div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+
+            <!-- Email Field -->
+            <div class="form-group">
+                <label for="id_email">Email Address</label>
+                {{ form.email }}
+                {% if form.email.errors %}
+                    <div class="error-message">
+                        {% for error in form.email.errors %}
+                            <div>⚠️ {{ error }}</div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+
+            <!-- Phone Field -->
+            <div class="form-group">
+                <label for="id_phone">Phone Number</label>
+                {{ form.phone }}
+                {% if form.phone.errors %}
+                    <div class="error-message">
+                        {% for error in form.phone.errors %}
+                            <div>⚠️ {{ error }}</div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+
+            <!-- DOB Field -->
+            <div class="form-group">
+                <label for="id_dob">Date of Birth</label>
+                {{ form.dob }}
+                {% if form.dob.errors %}
+                    <div class="error-message">
+                        {% for error in form.dob.errors %}
+                            <div>⚠️ {{ error }}</div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+
+            <!-- Password Field -->
+            <div class="form-group">
+                <label for="id_password1">Password</label>
+                {{ form.password1 }}
+                <div class="help-text">
+                    Password must be at least 8 characters and not entirely numeric.
+                </div>
+                {% if form.password1.errors %}
+                    <div class="error-message">
+                        {% for error in form.password1.errors %}
+                            <div>⚠️ {{ error }}</div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+
+            <!-- Confirm Password Field -->
+            <div class="form-group">
+                <label for="id_password2">Confirm Password</label>
+                {{ form.password2 }}
+                {% if form.password2.errors %}
+                    <div class="error-message">
+                        {% for error in form.password2.errors %}
+                            <div>⚠️ {{ error }}</div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            </div>
+
+            <!-- Non-field errors -->
+            {% if form.non_field_errors %}
+                <div class="error-alert">
+                    {% for error in form.non_field_errors %}
+                        <div>⚠️ {{ error }}</div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+
+            <!-- Submit Button -->
+            <button type="submit" class="submit-btn">Create Account</button>
+        </form>
+
+        <!-- Login Link -->
+        <div class="login-link">
+            Already have an account? <a href="{% url 'login' %}">Login here</a>
+        </div>
+    </div>
 </div>
-</body>
-</html>
+
+{% endblock content %}

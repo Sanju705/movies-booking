@@ -15,6 +15,7 @@ from django.conf import settings
 from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
 from .models import Payment
+from .email_service import send_ticket_email
 
 client = razorpay.Client(
     auth=(settings.RAZORPAY_KEY_ID, settings.RAZORPAY_KEY_SECRET)
@@ -32,21 +33,32 @@ def index(request):
             ticket_count = form.cleaned_data['ticket']
             date = form.cleaned_data['date']
             print(movie_name,date,showtime,ticket_count)
+            
+            # Check if user has email
+            user_email = request.user.email
+            if not user_email:
+                print(f"⚠️ User {request.user.username} has no email address in profile")
+                print(f"   Please update your profile with an email address")
+            
             ticket_obj = ticket.objects.create(movie_name = movie_name,
                                    date = date, 
                                    showtime = showtime,
-                                   ticket = ticket_count
+                                   ticket = ticket_count,
+                                   email = user_email
                                    )
-            # send_mail("successfully booked movie ticket ",f"" ,settings.EMAIL_HOST_USER,[ticket_obj.email],fail_silently=False)
-            send_mail(
-    "successfully booked movie ticket",
-    "",
-    settings.EMAIL_HOST_USER,
-    [ticket_obj.email],
-    fail_silently=False
-)
+            
+            # Send detailed ticket confirmation email with QR code
+            if user_email:
+                email_sent = send_ticket_email(ticket_obj, user_email)
+                
+                if email_sent:
+                    print(f"✅ Ticket confirmation email sent to {user_email}")
+                else:
+                    print(f"⚠️ Failed to send ticket confirmation email to {user_email}")
+            else:
+                print(f"⚠️ Cannot send email - user has no email address in profile")
 
-            return redirect("pay", id=ticket_obj.id)
+            return redirect("booked_ticket", id=ticket_obj.id)
         else:
             print('ntg')
     
@@ -77,6 +89,14 @@ def booked_ticket(request,id):
     qr.save(buffer, format="PNG")
     qr_base64 = base64.b64encode(buffer.getvalue()).decode()
 
+    #  # Send detailed ticket confirmation email with QR code
+    #         email_sent = send_ticket_email(ticket_obj, ticket_obj.email)
+            
+    #         if email_sent:
+    #             print(f"✅ Ticket confirmation email sent to {ticket_obj.email}")
+    #         else:
+    #             print(f"⚠️ Failed to send ticket confirmation email to {ticket_obj.email}")
+
     context = {
         "Ticket": Ticket,
         "qr_code": qr_base64
@@ -88,8 +108,24 @@ def register(request):
     if request.method == 'POST':
         form = RegisterForm(request.POST)
         if form.is_valid():
-            form.save()
-            return redirect('login')
+            try:
+                user = form.save(commit=False)
+                user.email = form.cleaned_data['email']
+                user.phone = form.cleaned_data['phone']
+                user.dob = form.cleaned_data['dob']
+                user.save()
+                print(f"✅ New user registered successfully: {user.username}")
+                print(f"   Email: {user.email}")
+                print(f"   Phone: {user.phone}")
+                return redirect('login')
+            except Exception as e:
+                print(f"❌ Error saving user: {str(e)}")
+                return render(request, 'register.html', {'form': form, 'error': 'Failed to create account'})
+        else:
+            print(f"❌ Form validation failed for user: {form.data.get('username', 'unknown')}")
+            for field, errors in form.errors.items():
+                for error in errors:
+                    print(f"   {field}: {error}")
     else:
         form = RegisterForm()
     return render(request, 'register.html', {'form': form})

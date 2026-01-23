@@ -144,9 +144,12 @@ EMAIL_USE_TLS = True
 
 EMAIL_HOST_USER = "kamanisanju2705@gmail.com"    
 
-EMAIL_HOST_PASSWORD = "uqem layc urhf rtgh"   # App password (not your Gmail password)
+EMAIL_HOST_PASSWORD = "wcud fisd uyaw qzgo"   # App password (not your Gmail password)
 
-# uqem layc urhf rtgh   google app password
+DEFAULT_FROM_EMAIL = "kamanisanju2705@gmail.com"
+
+# If emails not working, uncomment below to test via console:
+# EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 
 
 AUTH_USER_MODEL = 'app.CinemaUser'
